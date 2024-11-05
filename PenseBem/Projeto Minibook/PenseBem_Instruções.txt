@@ -1,0 +1,4 @@
+Executar no prompt dos da seguinte maneira
+
+> cd [local_do_arquivo]
+> java -jar PenseBem.jar

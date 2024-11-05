@@ -1,0 +1,88 @@
+@echo off
+title "Pense Bem"
+COLOR F1
+cls
+
+REM Coleta o nome e a idade do Jogador
+echo Jogador:
+set /p "Jogador=>"
+
+echo Idade:
+set /p "Idade=>"
+
+REM Abre arquivo de Perguntas e lê linha a linha
+FOR /F "tokens=1,2,3,4,5,6,7 delims=;" %%G IN (%~dp0\Perguntas.csv) DO (
+
+REM Variáveis carregadas %%G %%H %%I %%J %%K %%L %%M
+REM Onde:
+REM %%G - Idade
+REM %%H - Resposta
+REM %%I - Pergunta
+REM %%J - Alternativa A
+REM %%K - Alternativa B
+REM %%L - Alternativa C
+REM %%M - Alternativa D
+
+  REM Se idade do jogador é igual a idade apropriada para a pergunta
+  IF %%G EQU %Idade% (
+
+    REM Exibe a pergunta
+    echo %%I
+
+	REM Exibe alternativa A
+	IF [%%J] NEQ [] echo A - %%J
+
+	REM Exibe alternativa B
+	IF [%%K] NEQ [] echo B - %%K
+
+	REM Exibe alternativa C
+	IF [%%L] NEQ [] echo C - %%L
+
+	REM Exibe alternativa D
+	IF [%%M] NEQ [] echo D - %%M
+
+    REM Solicita a resposta
+	set /p "Resposta=>"
+	
+    REM Se jogador menor ou igual a 6 anos pega o primeiro dígito da resposta
+	IF [%%G] LEQ 6 (
+	  set /a sResposta=%Resposta:~0,1%
+	  echo passo 1
+	) ELSE (
+	  set /a sResposta=%Resposta%
+	  echo passo 2
+	)
+	
+	echo "%%H"
+	echo "%sResposta%"
+	
+	IF [%%H] EQU [%sResposta%] ( 
+	  echo Resposta correta 
+	  echo passo 3
+	) ELSE ( 
+	  echo Resposta errada 
+	  echo passo 4
+	)
+	
+	set /a Resposta=[]
+	set /a sResposta=[]
+	
+	echo
+	echo
+  )
+)
+pause
+
+@echo %Jogador%
+@echo %Idade%
+@echo %Resposta%
+@echo %sResposta%
+
+REM Limpando variáveis
+set /a Jogador=[]
+set /a Idade=[]
+set /a Resposta=[]
+set /a sResposta=[]
+
+echo Fim
+	
