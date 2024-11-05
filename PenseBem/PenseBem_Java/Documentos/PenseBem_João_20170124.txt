@@ -1,0 +1,59 @@
+//MATEMATICA.SH
+//VERSÃO BASH LINUX 
+
+SECONDS=0
+START=$(date)
+CERTASEQUENCIA=0
+CERTATOTAL=0
+ERRADAS=0
+OPERADOR=+
+CASA1=9
+CASA2=9
+
+while [ $CERTASEQUENCIA -lt 10 ]; do
+	if [ "$RESULTADO" == "$RESPOSTA" ]; then
+		NUM1=$((RANDOM%$CASA1+0))
+		NUM2=$((RANDOM%CASA2+0))
+		RESULTADO=$(($NUM1$OPERADOR$NUM2))
+		read -p "$NUM1 $OPERADOR $NUM2 = " RESPOSTA
+	else
+		echo PENSE BEM
+		read -p "$NUM1 $OPERADOR $NUM2 = " RESPOSTA
+	fi
+	
+	if [ "$RESULTADO" == "$RESPOSTA" ]; then
+		let CERTASEQUENCIA=CERTASEQUENCIA+1
+		let CERTATOTAL=CERTATOTAL+1
+	else
+		CERTASEQUENCIA=0
+		let ERRADAS=ERRADAS+1
+	fi
+done
+
+echo CERTATOTAL: $CERTATOTAL
+echo CERTASEQUENCIA: $CERTASEQUENCIA
+echo ERRADAS: $ERRADAS
+
+END=$(date)
+duration=$SECONDS
+
+echo $START
+echo $END
+echo "$(($duration / 60)) minutos $(($duration % 60)) segundos."
+echo DESAFIO
+
+OPERADOR=-
+CASA1=99
+CASA2=9
+NUM1=$((RANDOM%$CASA1+0))
+NUM2=$((RANDOM%CASA2+0))
+RESULTADO=$(($NUM1$OPERADOR$NUM2))
+read -p "$NUM1 $OPERADOR $NUM2 = " RESPOSTA
+
+if [ "$RESULTADO" == "$RESPOSTA" ]; then
+	echo $OPERADOR > gameJP.operador
+	echo $CASA1 > gameJP.casa1
+	echo $CASA2 > gameJP.casa2
+	else
+	echo $NUM1 $OPERADOR $NUM2 $RESULTADO $RESPOSTA >> gameJP.log
+fi
